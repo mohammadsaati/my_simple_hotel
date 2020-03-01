@@ -1,25 +1,42 @@
 import React from 'react';
-import logo from './logo.svg';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+
+import { HotelProvider } from './contexts/hotel/HotelContext';
+import { RoomProvider } from './contexts/room/RoomContext';
+import { UserProvider } from './contexts/user/UserContext';
+import { OrderProvider } from './contexts/OrderContext';
+import Home from './components/Home';
+import HotelsPage from './components/pages/HotelsPage';
+import ShowHotelPage from './components/pages/ShowHotelPage';
+import LoginPage from './components/pages/LoginPage';
+import RegisterPage from './components/pages/RegisterPage';
+import Panel from './components/pages/Panel';
+import AddRoomPage from './components/pages/AddRoomPage';
+
 import './App.css';
 
-function App() {
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <HotelProvider>
+      <RoomProvider>
+        <UserProvider>
+          <OrderProvider>
+            <Router>
+              <Switch>
+                <Route exact path='/' component={Home} />
+                <Route exact path='/login' component={LoginPage} />
+                <Route exact path='/register' component={RegisterPage} />
+                <Route exact path='/panel' component={Panel} />
+                <Route exact path='/addroom/:hotelId' component={AddRoomPage} />
+                <Route exact path='/hotels/:country' component={HotelsPage} />
+                <Route exact path='/hotel/:name' component={ShowHotelPage} />
+              </Switch>
+            </Router>
+          </OrderProvider>
+        </UserProvider>
+      </RoomProvider>
+    </HotelProvider>
   );
 }
 
